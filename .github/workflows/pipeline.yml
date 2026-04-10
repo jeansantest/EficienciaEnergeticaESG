@@ -33,5 +33,5 @@ jobs:
 
       - name: Test API
         run: |
-          sleep 15
-          curl --fail http://localhost:8080/alertas-consumo
+          sleep 30
+          curl --fail http://localhost:8080/consumo-energia
