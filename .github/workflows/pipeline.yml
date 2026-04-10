@@ -1,12 +1,11 @@
 name: DevOps Pipeline
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-
 on:
   push:
     branches: [ "main" ]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-test-deploy:
@@ -31,7 +30,9 @@ jobs:
       - name: Run container
         run: docker run -d -p 8080:8080 eficiencia-app
 
-      - name: Test API
+      - name: Wait for API
         run: |
-          sleep 30
-          curl --fail http://localhost:8080/consumo-energia
+          for i in {1..10}; do
+            sleep 5
+            curl -f http://localhost:8080/alertas-consumo && break
+          done
